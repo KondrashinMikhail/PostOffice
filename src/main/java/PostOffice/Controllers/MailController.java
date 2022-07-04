@@ -107,9 +107,9 @@ public class MailController {
         return new MailDto(mailService.find(MailType.valueOf(mailType), recipientIndex));
     }
 
-    @GetMapping("/{id}")
-    public Mail getMail(@PathVariable Long id) {
-        return mailService.findMail(id);
+    @GetMapping("/{id}/status")
+    public MailStatus getMail(@PathVariable Long id) {
+        return mailService.findMail(id).getStatus();
     }
 
     @GetMapping("/{id}/history")
