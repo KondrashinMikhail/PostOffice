@@ -1,6 +1,7 @@
 package PostOffice.Controllers;
 
 import PostOffice.Entities.Mail.MailDto;
+import PostOffice.Entities.Office.OfficeDto;
 import PostOffice.Services.OfficeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,8 @@ public class OfficeController {
         return officeService.findAllMails(index).stream().map(MailDto::new).toList();
     }
 
-
-
+    @GetMapping("/all")
+    public List<OfficeDto> getAllOffices(){
+        return officeService.findAllOffices().stream().map(OfficeDto::new).toList();
+    }
 }

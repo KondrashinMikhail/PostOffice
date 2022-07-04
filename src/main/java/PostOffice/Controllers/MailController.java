@@ -116,4 +116,9 @@ public class MailController {
     public List<HistoryDto> getHistories(@PathVariable Long id) {
         return historyService.findHistoriesByMailId(id).stream().map(HistoryDto::new).toList();
     }
+
+    @GetMapping("/all")
+    public List<MailDto> getAllMails(){
+        return mailService.findAllMails().stream().map(MailDto::new).toList();
+    }
 }
