@@ -112,7 +112,7 @@ http://spring-dev.ru:8080/PostOffice/swagger-ui/index.html
 
 Для работы проекта на сервере приложений tomcat, на VPS сервере с операционной системой CentOS 7, были установлены: 
 
-`jdk` 18-й версии;
+`jdk` 17-й версии;
 
 `Apache tomcat server` версии 9.0.64, с оффициального сайта https://tomcat.apache.org/download-90.cgi;
 
