@@ -88,7 +88,7 @@
     
 Структуру API запросов и ответов, а так же список возможных запросов можно посмотреть по ссылке:
 
-http://spring-dev.ru:8080/PostOffice/swagger-ui/index.html
+http://spring-dev.ru:8080/swagger-ui/index.html
 
 Ниже приведено назначение всех запросов:
     
@@ -100,7 +100,7 @@ http://spring-dev.ru:8080/PostOffice/swagger-ui/index.html
     
     ● POST /mail - для создания нового почтового отправления
     
-    ● PATCH /mail/{id}/changeStatus - для смены статуса у почтового отправления с идентификатором id
+    ● PATCH /mail/{id}/nextStatus - для смены статуса у почтового отправления с идентификатором id
     
     ● GET /mail/{id}/status - для просмотра статуса почтового отправления с идентификатором id
     
@@ -114,18 +114,6 @@ http://spring-dev.ru:8080/PostOffice/swagger-ui/index.html
 
 `jdk` 17-й версии;
 
-`Apache tomcat server` версии 9.0.64, с оффициального сайта https://tomcat.apache.org/download-90.cgi;
-
-# Информация о доступах
-
-Для доступа на сервер приложений tomcat используются следующие данные:
-
-`Логин:` tomcat 
-
-`Пароль:` mypassword
-
-Сервер Tomcat работает по ссылке: http://spring-dev:8080
-
 # Описание запуска
 
-Приложение работает по ссылке: http://spring-dev.ru:8080/PostOffice
+Приложение работает по ссылке: http://spring-dev.ru:8080
