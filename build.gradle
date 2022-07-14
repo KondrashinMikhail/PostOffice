@@ -1,11 +1,11 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'io.freefair.lombok' version '6.4.3.1'
 	id 'java'
-	id 'war'
 }
 
-version = '0.0.1-SNAPSHOT'
+version = ''
 sourceCompatibility = '17'
 
 repositories {
@@ -14,11 +14,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-	providedCompile 'javax.servlet:javax.servlet-api'
-
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 

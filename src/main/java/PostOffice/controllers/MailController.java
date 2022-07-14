@@ -1,19 +1,17 @@
-package PostOffice.Controllers;
+package PostOffice.controllers;
 
-import PostOffice.Entities.History.History;
-import PostOffice.Entities.History.HistoryDto;
-import PostOffice.Entities.Mail.Mail;
-import PostOffice.Entities.Mail.MailDto;
-import PostOffice.Entities.Mail.MailStatus;
-import PostOffice.Entities.Mail.MailType;
-import PostOffice.Entities.Office.Office;
-import PostOffice.Exceptions.MailAlreadyIssuedException;
-import PostOffice.Services.*;
+import PostOffice.dto.HistoryDto;
+import PostOffice.entities.Mail;
+import PostOffice.dto.MailDto;
+import PostOffice.enums.MailStatus;
+import PostOffice.enums.MailType;
+import PostOffice.entities.Office;
+import PostOffice.exceptions.MailAlreadyIssuedException;
+import PostOffice.services.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/mail")
@@ -28,32 +26,8 @@ public class MailController {
         this.officeService = officeService;
     }
 
-    public Office findCurrentOffice(Mail mail) {
-        List<Office> offices = officeService.findAllOffices();
-        Office currentOffice = new Office();
-        for (Office office : offices)
-            if (office.getMails().contains(mail)) {
-                currentOffice = office;
-                break;
-            }
-        return currentOffice;
-    }
-
-    public Office findNewOffice(Mail mail) {
-        List<Office> offices = officeService.findAllOffices();
-        List<History> histories = historyService.findHistoriesByMailId(mail.getId());
-        Office firstOffice = new Office();
-        for(History history : histories)
-            if (history.getStatus() == MailStatus.Accepted)
-                firstOffice = history.getOffice();
-        offices.remove(firstOffice);
-        offices.remove(officeService.findOffice(mail.getRecipientIndex()));
-        Long nextIndex = offices.get(new Random().nextInt(offices.size())).getIndex();
-        return officeService.findOffice(nextIndex);
-    }
-
-    @PatchMapping ("/{id}/changeStatus")
-    public void changeStatus(@PathVariable Long id) {
+    @PatchMapping ("/{id}/nextStatus")
+    public void nextStatus(@PathVariable Long id) {
         final Mail currentMail = mailService.findMail(id);
         Office nextOffice = null;
         MailStatus newStatus = null;
@@ -61,16 +35,16 @@ public class MailController {
         switch (currentMail.getStatus()) {
             case Accepted -> {
                 newStatus = MailStatus.SendToWayPoint;
-                officeService.removeMailFromOffice(findCurrentOffice(currentMail).getIndex(), id);
+                officeService.removeMailFromOffice(officeService.findCurrentOffice(currentMail).getIndex(), id);
             }
             case SendToWayPoint -> {
                 newStatus = MailStatus.ArrivedToWayPoint;
-                nextOffice = findNewOffice(currentMail);
+                nextOffice = officeService.findNewOffice(currentMail);
                 officeService.addMailToOffice(nextOffice.getIndex(), id);
             }
             case ArrivedToWayPoint -> {
                 newStatus = MailStatus.SendToDestination;
-                officeService.removeMailFromOffice(findCurrentOffice(currentMail).getIndex(), id);
+                officeService.removeMailFromOffice(officeService.findCurrentOffice(currentMail).getIndex(), id);
             }
             case SendToDestination -> {
                 newStatus = MailStatus.ArrivedAtDestination;
@@ -79,7 +53,7 @@ public class MailController {
             }
             case ArrivedAtDestination -> {
                 newStatus = MailStatus.Issued;
-                officeService.removeMailFromOffice(findCurrentOffice(currentMail).getIndex(), id);
+                officeService.removeMailFromOffice(officeService.findCurrentOffice(currentMail).getIndex(), id);
             }
             case Issued -> throw new MailAlreadyIssuedException(id);
         }
@@ -98,7 +72,10 @@ public class MailController {
                               @RequestParam("recipientAddress") String recipientAddress,
                               @RequestParam("recipientName") String recipientName,
                               @RequestParam("sourceIndex") Long sourceIndex) {
-        mailService.addMail(MailType.valueOf(mailType), recipientIndex, recipientAddress, recipientName);
+        mailService.addMail(MailType.valueOf(mailType),
+                recipientIndex,
+                recipientAddress,
+                recipientName);
         historyService.addHistory(MailStatus.Accepted,
                 new Date(),
                 officeService.findOffice(sourceIndex),

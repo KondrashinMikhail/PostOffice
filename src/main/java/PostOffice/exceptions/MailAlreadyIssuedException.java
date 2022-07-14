@@ -1,4 +1,4 @@
-package PostOffice.Exceptions;
+package PostOffice.exceptions;
 
 public class MailAlreadyIssuedException extends RuntimeException {
     public MailAlreadyIssuedException (Long id) {

@@ -1,4 +1,4 @@
-package PostOffice.Entities.Mail;
+package PostOffice.enums;
 
 public enum MailStatus {
     Accepted,

@@ -1,4 +1,4 @@
-package PostOffice.Exceptions;
+package PostOffice.exceptions;
 
 public class WrongOfficeIndexException extends RuntimeException {
     public WrongOfficeIndexException() {

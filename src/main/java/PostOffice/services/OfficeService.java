@@ -1,25 +1,30 @@
-package PostOffice.Services;
+package PostOffice.services;
 
-import PostOffice.Entities.Mail.Mail;
-import PostOffice.Entities.Office.Office;
-import PostOffice.Exceptions.MailNotFoundException;
-import PostOffice.Exceptions.OfficeNotFoundException;
-import PostOffice.Repositories.MailRepository;
-import PostOffice.Repositories.OfficeRepository;
+import PostOffice.entities.History;
+import PostOffice.entities.Mail;
+import PostOffice.entities.Office;
+import PostOffice.enums.MailStatus;
+import PostOffice.exceptions.MailNotFoundException;
+import PostOffice.exceptions.OfficeNotFoundException;
+import PostOffice.repositories.MailRepository;
+import PostOffice.repositories.OfficeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class OfficeService {
     private final OfficeRepository officeRepository;
     private final MailRepository mailRepository;
+    private final HistoryService historyService;
 
-    public OfficeService(OfficeRepository officeRepository, MailRepository mailRepository) {
+    public OfficeService(OfficeRepository officeRepository, MailRepository mailRepository, HistoryService historyService) {
         this.officeRepository = officeRepository;
         this.mailRepository = mailRepository;
+        this.historyService = historyService;
     }
 
     @Transactional
@@ -83,5 +88,29 @@ public class OfficeService {
                 .deleteMail(mail.orElseThrow(() -> new MailNotFoundException(id)));
         return officeRepository.save( office.orElseThrow(() ->
                 new OfficeNotFoundException(index)));
+    }
+
+    public Office findCurrentOffice(Mail mail) {
+        List<Office> offices = findAllOffices();
+        Office currentOffice = new Office();
+        for (Office office : offices)
+            if (office.getMails().contains(mail)) {
+                currentOffice = office;
+                break;
+            }
+        return currentOffice;
+    }
+
+    public Office findNewOffice(Mail mail) {
+        List<Office> offices = findAllOffices();
+        List<History> histories = historyService.findHistoriesByMailId(mail.getId());
+        Office firstOffice = new Office();
+        for(History history : histories)
+            if (history.getStatus() == MailStatus.Accepted)
+                firstOffice = history.getOffice();
+        offices.remove(firstOffice);
+        offices.remove(findOffice(mail.getRecipientIndex()));
+        Long nextIndex = offices.get(new Random().nextInt(offices.size())).getIndex();
+        return findOffice(nextIndex);
     }
 }

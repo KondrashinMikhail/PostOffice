@@ -1,10 +1,10 @@
-package PostOffice.Services;
+package PostOffice.services;
 
-import PostOffice.Entities.Mail.Mail;
-import PostOffice.Entities.Mail.MailStatus;
-import PostOffice.Entities.Mail.MailType;
-import PostOffice.Exceptions.MailNotFoundException;
-import PostOffice.Repositories.MailRepository;
+import PostOffice.entities.Mail;
+import PostOffice.enums.MailStatus;
+import PostOffice.enums.MailType;
+import PostOffice.exceptions.MailNotFoundException;
+import PostOffice.repositories.MailRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;

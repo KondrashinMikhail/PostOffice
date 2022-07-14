@@ -1,11 +1,10 @@
-package PostOffice.Services;
+package PostOffice.services;
 
-import PostOffice.Entities.History.History;
-import PostOffice.Entities.Mail.Mail;
-import PostOffice.Entities.Mail.MailStatus;
-import PostOffice.Entities.Office.Office;
-import PostOffice.Repositories.HistoryRepository;
-import PostOffice.Repositories.MailRepository;
+import PostOffice.entities.History;
+import PostOffice.entities.Mail;
+import PostOffice.enums.MailStatus;
+import PostOffice.entities.Office;
+import PostOffice.repositories.HistoryRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +28,6 @@ public class HistoryService {
 
     @Transactional
     public List<History> findHistoriesByMailId(Long id) {
-        final List<History> histories = historyRepository.findAll();
-        histories.removeIf(history -> !Objects.equals(history.getMail().getId(), id));
-        return histories;
+        return historyRepository.findAllByMail_id(id);
     }
 }

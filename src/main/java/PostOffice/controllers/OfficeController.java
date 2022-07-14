@@ -1,8 +1,8 @@
-package PostOffice.Controllers;
+package PostOffice.controllers;
 
-import PostOffice.Entities.Mail.MailDto;
-import PostOffice.Entities.Office.OfficeDto;
-import PostOffice.Services.OfficeService;
+import PostOffice.dto.MailDto;
+import PostOffice.dto.OfficeDto;
+import PostOffice.services.OfficeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

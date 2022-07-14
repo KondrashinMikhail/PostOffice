@@ -1,6 +1,8 @@
-package PostOffice.Entities.Office;
+package PostOffice.entities;
 
-import PostOffice.Entities.Mail.Mail;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +10,9 @@ import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Office {
     @Id
@@ -17,40 +22,9 @@ public class Office {
     @ManyToMany
     private List<Mail> Mails = new ArrayList<>();
 
-    public Office() {
-    }
-
     public Office(Long index, String name, String address) {
         Index = index;
         Name = name;
-        Address = address;
-    }
-
-    public Long getIndex() {
-        return Index;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public List<Mail> getMails() {
-        return Mails;
-    }
-
-    public void setIndex(Long index) {
-        Index = index;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public void setAddress(String address) {
         Address = address;
     }
 

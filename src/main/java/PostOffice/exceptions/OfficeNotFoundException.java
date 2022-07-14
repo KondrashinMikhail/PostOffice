@@ -1,4 +1,4 @@
-package PostOffice.Exceptions;
+package PostOffice.exceptions;
 
 public class OfficeNotFoundException extends RuntimeException {
     public OfficeNotFoundException(Long index) {
