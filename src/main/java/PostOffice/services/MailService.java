@@ -63,14 +63,6 @@ public class MailService {
         return mail;
     }
 
-    /*@Transactional
-    public Mail changeStatus(Long id, MailStatus status, Office office) {
-        final Mail currentMail = findMail(id);
-        currentMail.setStatus(status);
-        historyService.addHistory(status, new Date(), office, currentMail);
-        return mailRepository.save(currentMail);
-    }*/
-
     @Transactional
     public Mail deleteMail(Long id) {
         final Mail currentMail = findMail(id);
