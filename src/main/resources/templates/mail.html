@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <form th:action="@{/mail/create}" method="get">
+        <button class="main-button" style="--h: #d0f0c0;">
+            Добавить
+        </button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-borderless table-custom">
+            <thead>
+            <tr>
+                <th scope="col">Тип</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Индекс получателя</th>
+                <th scope="col">Адрес получателя</th>
+                <th scope="col">Имя получателя</th>
+                <th scope="col">Индекс отправителя</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mail, iterator: ${mails}">
+                <td th:text="${mail.type}"></td>
+                <td th:text="${mail.status}"></td>
+                <td th:text="${mail.recipientIndex}"></td>
+                <td th:text="${mail.recipientAddress}"></td>
+                <td th:text="${mail.recipientName}"></td>
+                <td th:text="${mail.sourceIndex}"></td>
+                <td style="width: 10%">
+                    <div class="btn-group" role="group">
+                        <form th:action="@{/mail/{id}/nextStatus(id=${mail.id})}" style="margin-right: 10px;"
+                              method="get">
+                            <button class="main-button" style="--h: #f3eeb2; width: 220px">
+                                Перевести статус
+                            </button>
+                        </form>
+                        <form th:action="@{/mail/{id}/history(id=${mail.id})}" style="margin-right: 10px;"
+                              method="get">
+                            <button class="main-button">
+                                История
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <form th:action="@{/office}" method="get">
+        <button class="main-button">
+            Назад
+        </button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-borderless table-custom">
+            <thead>
+            <tr>
+                <th scope="col">Тип</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Индекс получателя</th>
+                <th scope="col">Адрес получателя</th>
+                <th scope="col">Имя получателя</th>
+                <th scope="col">Индекс отправителя</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="mail, iterator: ${mails}">
+                <td th:text="${mail.type}"></td>
+                <td th:text="${mail.status}"></td>
+                <td th:text="${mail.recipientIndex}"></td>
+                <td th:text="${mail.recipientAddress}"></td>
+                <td th:text="${mail.recipientName}"></td>
+                <td th:text="${mail.sourceIndex}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

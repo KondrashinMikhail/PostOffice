@@ -1,0 +1,83 @@
+.wrapper {
+    position: relative;
+}
+
+.wrapper :is(.share-button, .link) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #151515;
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.share-button {
+    position: absolute;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.4s linear;
+}
+
+.share-button:hover {
+    background-color: #87ceeb;
+    color: white;
+}
+
+.item {
+    position: absolute;
+    list-style: none;
+    transition: transform 0.4s;
+    transition-delay: var(--d);
+}
+
+.wrapper.active .item:nth-child(1) {
+    transform: translateX(170px);
+}
+
+.wrapper.active .item:nth-child(2) {
+    transform: translateX(115px);
+}
+
+.wrapper.active .item:nth-child(3) {
+    transform: translateX(60px);
+}
+
+.link:hover {
+    color: #fff;
+    transition: background-color 0.4s;
+}
+
+.ig:hover {
+    background-image: radial-gradient(circle at 30% 107%,
+            #fdf497 0%, #fdf497 5%,
+            #fd5949 45%, #d6249f 60%,
+            #285AEB 90%);
+}
+
+.tg:hover {
+    background-color: #1DA1F2;
+}
+
+.gh:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.gh:hover i,
+ .tg:hover i,
+ .ig:hover i {
+    animation: shake 0.4s
+}
+
+@keyframes shake {
+    10%{transform: rotate(10deg);}
+    20%{transform: rotate(-10deg);}
+    30%{transform: rotate(10deg);}
+    40%{transform: rotate(-10deg);}
+    50%{transform: rotate(10deg);}
+}

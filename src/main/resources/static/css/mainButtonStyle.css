@@ -1,0 +1,52 @@
+.main-button {
+    width: 100px;
+    height: 35px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    background: #0a117a content-box;
+    color: white;
+    padding: 5px;
+    transition: 0.4s linear;
+}
+
+.main-button:hover {
+    background-color: var(--h, #87ceeb);
+    padding: 0px;
+    color: #0a117a;
+}
+
+.main-button:before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 3px solid #0a117a;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    transition: 0.4s ease;
+}
+
+.main-button:after {
+    content: '';
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border: 3px solid #0a117a;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    transition: 0.4s ease;
+}
+
+.main-button:hover:before,
+.main-button:hover:after {
+    width: 100%;
+    height: 100%;
+}

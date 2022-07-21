@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content" style="margin-top: 20px;">
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 50%;" valign="top">
+                <form action="#" th:action="@{/office/{index}(index=${index})}" th:object="${officeDto}" method="post">
+                    <div class="input-group mb-4">
+                        <input type="text" class="input" id="index" th:field="${officeDto.index}" required>
+                        <label for="index" class="input-label">Индекс</label>
+                    </div>
+                    <div class="input-group mb-4">
+                        <input type="text" class="input" id="name" th:field="${officeDto.name}" required>
+                        <label for="name" class="input-label">Название</label>
+                    </div>
+                    <div class="input-group mb-4">
+                        <input type="text" class="input" id="address" th:field="${officeDto.address}" required>
+                        <label for="address" class="input-label">Адрес</label>
+                    </div>
+            </td>
+            <td style="width: 50%" valign="top">
+                <button type="submit" class="mb-4 main-button" style="margin-bottom: 10px; --h: #d0f0c0;">
+                    <span th:if="${index == null}"> Добавить </span>
+                    <span th:if="${index != null}"> Обновить </span>
+                </button>
+                </form>
+                <form th:action="@{/office}">
+                    <button class="mb-4 main-button"> Назад </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

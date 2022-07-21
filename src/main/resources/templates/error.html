@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="error">
+        <span th:text="${message}"></span>
+    </div>
+    <div class="error" style="height: 115%">
+        <form th:action="@{/}">
+            <button class="main-button"> На главную</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

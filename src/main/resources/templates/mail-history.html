@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <form th:action="@{/mail}" method="get">
+        <button class="main-button">
+            Назад
+        </button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-borderless table-custom">
+            <thead>
+            <tr>
+                <th scope="col">Статус</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Индекс отделения</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="history, iterator: ${histories}">
+                <td th:text="${history.status}"></td>
+                <td th:text="${history.date}"></td>
+                <td th:text="${history.index}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

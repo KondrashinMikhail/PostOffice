@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<body>
+<div class="container" layout:fragment="content">
+    <h1 align="center" style="color: #0a117a">Источники, на которые опирались:</h1>
+    <div class="options">
+        <div class="option" style="--optionBackground:url(/images/mailfence.jpg);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://mailfence.com" target="_blank">Mailfence</a></div>
+                    <div class="sub">Mailfence — сервис защищенной электронной почты, предлагающий
+сквозное шифрование и цифровую подпись на основе OpenPGP.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option" style="--optionBackground:url(/images/yahoo.jpg);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://yahoo.com" target="_blank">Yahoo!</a></div>
+                    <div class="sub">Yahoo! Mail, один из старейших и наиболее популярных почтовых
+сервисов в Интернете.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option" style="--optionBackground:url(/images/outlook.jpg);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://outlook.live.com/" target="_blank">Outlook</a></div>
+                    <div class="sub">Outlook.com — бесплатный персональный информационный менеджер,
+реализованный как веб-приложение, принадлежащий Microsoft.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option" style="--optionBackground:url(/images/pochta-rossii.png);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://www.pochta.ru" target="_blank">Почта России</a></div>
+                    <div class="sub">«Почта России» — российская государственная компания, оператор
+российской государственной почтовой сети.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option" style="--optionBackground:url(/images/gmail.png);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://www.google.com/intl/ru/gmail/about/" target="_blank">Gmail</a></div>
+                    <div class="sub">Gmail — бесплатная почтовая служба от компании Google. Предоставляет
+доступ к почтовым ящикам через веб-интерфейс, а также в приложении.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="option" style="--optionBackground:url(/images/mail-ru.jpg);">
+            <div class="shadow"></div>
+            <div class="label">
+                <div class="info">
+                    <div class="main"><a class="card-href" href="https://mail.ru" target="_blank">Mail.ru</a></div>
+                    <div class="sub">Mail.ru — русскоязычный интернет-портал, принадлежащий
+технологической компании VK.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script>
+        $(".option").click(function () {
+            $(".option").removeClass("active");
+            $(this).addClass("active");
+        });
+    </script>
+</div>
+</body>
+</html>
