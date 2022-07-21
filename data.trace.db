@@ -1,4 +1,0 @@
-2022-07-21 14:10:49 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "'Card' (MAIL: ""TYPE"" INTEGER)"
-Data conversion error converting "'Card' (MAIL: ""TYPE"" INTEGER)"; SQL statement:
-insert into mail (recipient_address, recipient_index, recipient_name, source_index, status, type, id) values (?, ?, ?, ?, ?, ?, ?) [22018-212]

@@ -48,33 +48,32 @@
                     <a class="nav-link" href="/mail"
                        th:classappend="${#strings.equals(activeLink, '/mail')} ? 'active' : ''">Отправления</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="margin-right: 10px;">
                     <a class="nav-link" href="/office"
                        th:classappend="${#strings.equals(activeLink, '/office')} ? 'active' : ''">Отделения</a>
                 </li>
-                <div class="wrapper">
-                    <ul class="list">
-                        <li class="item">
-                            <a href="#" class="link ig">
-                                <i class="ri-instagram-line"></i>
-                            </a>
-                        </li>
-                        <li class="item" style="--d: .25s;">
-                            <a href="#" class="link tg">
-                                <i class="ri-telegram-line"></i>
-                            </a>
-                        </li>
-                        <li class="item" style="--d: .5s;">
-                            <a href="#" class="link gh">
-                                <i class="ri-github-line"></i>
-                            </a>
-                        </li>
-                        <button class="share-button">
-                            <i class="ri-share-line"></i>
-                        </button>
-                    </ul>
-                </div>
-                <script>
+                <ul class="navbar-nav" th:with="activeLink=${#request.requestURI}">
+                    <div class="wrapper" style="margin-right: 150px;">
+                        <ul class="list wrapper navbar-nav">
+                            <li class="item">
+                                <a href="https://tlgg.ru/@MiKKondR" target="_blank" class="link tg">
+                                    <i class="ri-telegram-line"></i>
+                                </a>
+                            </li>
+                            <li class="item" style="--d: .25s;">
+                                <a href="https://github.com/KondrashinMikhail/PostOffice/tree/mvc" target="_blank" class="link gh">
+                                    <i class="ri-github-line"></i>
+                                </a>
+                            </li>
+                            <button class="share-button">
+                                <i class="ri-share-line"></i>
+                            </button>
+                        </ul>
+                    </div>
+                    <li class="nav-item" style="margin-bottom: 15px;">
+                        <a class="nav-link"></a>
+                    </li>
+                    <script>
                     const btnEl = document.querySelector('.share-button');
 
                     const toggleOptions = () => {
@@ -91,6 +90,7 @@
                     };
 
                     btnEl.addEventListener('click', toggleOptions);
+
                 </script>
             </ul>
         </div>

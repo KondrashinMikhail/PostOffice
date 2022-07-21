@@ -36,27 +36,17 @@
 }
 
 .wrapper.active .item:nth-child(1) {
-    transform: translateX(170px);
+    transform: translateX(115px);
+    margin-right: 150px;
 }
 
 .wrapper.active .item:nth-child(2) {
-    transform: translateX(115px);
-}
-
-.wrapper.active .item:nth-child(3) {
     transform: translateX(60px);
 }
 
 .link:hover {
     color: #fff;
     transition: background-color 0.4s;
-}
-
-.ig:hover {
-    background-image: radial-gradient(circle at 30% 107%,
-            #fdf497 0%, #fdf497 5%,
-            #fd5949 45%, #d6249f 60%,
-            #285AEB 90%);
 }
 
 .tg:hover {
@@ -69,8 +59,7 @@
 }
 
 .gh:hover i,
- .tg:hover i,
- .ig:hover i {
+ .tg:hover i {
     animation: shake 0.4s
 }
 
