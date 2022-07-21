@@ -4,7 +4,6 @@ import PostOffice.dto.HistoryDto;
 import PostOffice.entities.Mail;
 import PostOffice.dto.MailDto;
 import PostOffice.enums.MailStatus;
-import PostOffice.enums.MailType;
 import PostOffice.entities.Office;
 import PostOffice.exceptions.MailAlreadyIssuedException;
 import PostOffice.services.*;
@@ -14,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/api/mail")
 public class MailController {
     private final MailService mailService;
     private final HistoryService historyService;
@@ -26,7 +25,7 @@ public class MailController {
         this.officeService = officeService;
     }
 
-    @PatchMapping ("/{id}/nextStatus")
+    @PatchMapping("/{id}/nextStatus")
     public void nextStatus(@PathVariable Long id) {
         final Mail currentMail = mailService.findMail(id);
         Office nextOffice = null;
@@ -35,7 +34,7 @@ public class MailController {
         switch (currentMail.getStatus()) {
             case Accepted -> {
                 newStatus = MailStatus.SendToWayPoint;
-                officeService.removeMailFromOffice(officeService.findCurrentOffice(currentMail).getIndex(), id);
+                officeService.removeMailFromOffice(officeService.findOffice(currentMail.getSourceIndex()).getIndex(), id);
             }
             case SendToWayPoint -> {
                 newStatus = MailStatus.ArrivedToWayPoint;
@@ -72,16 +71,17 @@ public class MailController {
                               @RequestParam("recipientAddress") String recipientAddress,
                               @RequestParam("recipientName") String recipientName,
                               @RequestParam("sourceIndex") Long sourceIndex) {
-        mailService.addMail(MailType.valueOf(mailType),
+        mailService.addMail(mailType,
                 recipientIndex,
                 recipientAddress,
-                recipientName);
+                recipientName,
+                sourceIndex);
         historyService.addHistory(MailStatus.Accepted,
                 new Date(),
                 officeService.findOffice(sourceIndex),
-                mailService.find(MailType.valueOf(mailType), recipientIndex));
-        officeService.addMailToOffice(sourceIndex, mailService.find(MailType.valueOf(mailType), recipientIndex).getId());
-        return new MailDto(mailService.find(MailType.valueOf(mailType), recipientIndex));
+                mailService.findAccepted(mailType, recipientIndex));
+        officeService.addMailToOffice(sourceIndex, mailService.findAccepted(mailType, recipientIndex).getId());
+        return new MailDto(mailService.findAccepted(mailType, recipientIndex));
     }
 
     @GetMapping("/{id}/status")
@@ -95,7 +95,7 @@ public class MailController {
     }
 
     @GetMapping("/all")
-    public List<MailDto> getAllMails(){
+    public List<MailDto> getAllMails() {
         return mailService.findAllMails().stream().map(MailDto::new).toList();
     }
 }

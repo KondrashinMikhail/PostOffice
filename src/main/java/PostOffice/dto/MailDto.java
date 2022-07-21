@@ -2,8 +2,6 @@ package PostOffice.dto;
 
 import PostOffice.entities.Mail;
 import PostOffice.enums.MailStatus;
-import PostOffice.enums.MailType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,11 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MailDto {
     private Long id;
-    private MailType type;
+    private String type;
     private MailStatus status;
     private Long recipientIndex;
     private String recipientAddress;
     private String recipientName;
+
+    private Long sourceIndex;
 
     public MailDto(Mail mail) {
         id = mail.getId();
@@ -26,5 +26,6 @@ public class MailDto {
         recipientIndex = mail.getRecipientIndex();
         recipientAddress = mail.getRecipientAddress();
         recipientName = mail.getRecipientName();
+        sourceIndex = mail.getSourceIndex();
     }
 }

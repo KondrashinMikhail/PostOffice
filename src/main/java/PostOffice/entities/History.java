@@ -38,4 +38,11 @@ public class History {
     public Mail getMail() {
         return mail;
     }
+
+    public String getIndex() {
+        if (office != null)
+            return office.getIndex().toString();
+        else
+            return "-";
+    }
 }

@@ -19,12 +19,10 @@ import java.util.Random;
 public class OfficeService {
     private final OfficeRepository officeRepository;
     private final MailRepository mailRepository;
-    private final HistoryService historyService;
 
-    public OfficeService(OfficeRepository officeRepository, MailRepository mailRepository, HistoryService historyService) {
+    public OfficeService(OfficeRepository officeRepository, MailRepository mailRepository) {
         this.officeRepository = officeRepository;
         this.mailRepository = mailRepository;
-        this.historyService = historyService;
     }
 
     @Transactional
@@ -76,17 +74,17 @@ public class OfficeService {
         final Optional<Mail> mail = mailRepository.findById(id);
         office.orElseThrow(() -> new OfficeNotFoundException(index))
                 .addMail(mail.orElseThrow(() -> new MailNotFoundException(id)));
-        return officeRepository.save( office.orElseThrow(() ->
+        return officeRepository.save(office.orElseThrow(() ->
                 new OfficeNotFoundException(index)));
     }
 
     @Transactional
-    public Office removeMailFromOffice(Long index, Long id){
+    public Office removeMailFromOffice(Long index, Long id) {
         final Optional<Office> office = officeRepository.findById(index);
         final Optional<Mail> mail = mailRepository.findById(id);
         office.orElseThrow(() -> new OfficeNotFoundException(index))
                 .deleteMail(mail.orElseThrow(() -> new MailNotFoundException(id)));
-        return officeRepository.save( office.orElseThrow(() ->
+        return officeRepository.save(office.orElseThrow(() ->
                 new OfficeNotFoundException(index)));
     }
 
@@ -103,12 +101,7 @@ public class OfficeService {
 
     public Office findNewOffice(Mail mail) {
         List<Office> offices = findAllOffices();
-        List<History> histories = historyService.findHistoriesByMailId(mail.getId());
-        Office firstOffice = new Office();
-        for(History history : histories)
-            if (history.getStatus() == MailStatus.Accepted)
-                firstOffice = history.getOffice();
-        offices.remove(firstOffice);
+        offices.remove(findOffice(mail.getSourceIndex()));
         offices.remove(findOffice(mail.getRecipientIndex()));
         Long nextIndex = offices.get(new Random().nextInt(offices.size())).getIndex();
         return findOffice(nextIndex);

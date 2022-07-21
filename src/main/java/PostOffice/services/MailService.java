@@ -2,7 +2,7 @@ package PostOffice.services;
 
 import PostOffice.entities.Mail;
 import PostOffice.enums.MailStatus;
-import PostOffice.enums.MailType;
+import PostOffice.exceptions.EqualIndexesException;
 import PostOffice.exceptions.MailNotFoundException;
 import PostOffice.repositories.MailRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,8 +22,9 @@ public class MailService {
     }
 
     @Transactional
-    public Mail addMail(MailType type, Long recipientIndex, String recipientAddress, String recipientName) {
-        final Mail mail = new Mail(type, MailStatus.Accepted, recipientIndex, recipientAddress, recipientName);
+    public Mail addMail(String type, Long recipientIndex, String recipientAddress, String recipientName, Long sourceIndex) {
+        if (recipientIndex.equals(sourceIndex)) throw new EqualIndexesException();
+        final Mail mail = new Mail(type, MailStatus.Accepted, recipientIndex, recipientAddress, recipientName, sourceIndex);
         return mailRepository.save(mail);
     }
 
@@ -38,7 +40,7 @@ public class MailService {
     }
 
     @Transactional
-    public Mail updateMail(Long id, MailType type, MailStatus status, Long recipientIndex, String recipientAddress, String recipientName) {
+    public Mail updateMail(Long id, String type, MailStatus status, Long recipientIndex, String recipientAddress, String recipientName) {
         final Mail currentMail = findMail(id);
         currentMail.setType(type);
         currentMail.setStatus(status);
@@ -49,13 +51,13 @@ public class MailService {
     }
 
     @Transactional
-    public Mail find(MailType type, Long recipientIndex) {
+    public Mail findAccepted(String type, Long recipientIndex) {
         final List<Mail> mails = findAllMails();
         Mail mail = new Mail();
         for (Mail value : mails) {
-            if (value.getStatus() == MailStatus.Accepted &&
-                    value.getType() == type &&
-                    value.getRecipientIndex() == recipientIndex) {
+            if (value.getStatus().equals(MailStatus.Accepted) &&
+                    value.getType().equals(type) &&
+                    Objects.equals(value.getRecipientIndex(), recipientIndex)) {
                 mail = value;
                 break;
             }

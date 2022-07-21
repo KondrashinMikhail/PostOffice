@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <form th:action="@{/office/edit/}" method="get">
+        <button class="main-button" style="--h: #d0f0c0;">
+            Добавить
+        </button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-borderless table-custom">
+            <thead>
+            <tr>
+                <th scope="col">Идекс</th>
+                <th scope="col">Название</th>
+                <th scope="col">Адрес</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="office, iterator: ${offices}">
+                <td th:text="${office.index}"></td>
+                <td th:text="${office.name}"></td>
+                <td th:text="${office.address}"></td>
+                <td style="width: 10%">
+                    <div class="btn-group" role="group">
+                        <form th:action="@{/office/{index}/mails(index=${office.index})}" style="margin-right: 10px;"
+                              method="get">
+                            <button class="main-button" style="width: 220px;">
+                                Хранящиеся отправления
+                            </button>
+                        </form>
+                        <form th:action="@{/office/edit/{index}(index=${office.index})}" style="margin-right: 10px;"
+                              method="get">
+                            <button class="main-button" style="--h: #f3eeb2;">
+                                Изменить
+                            </button>
+                        </form>
+                        <button th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${office.index}').click()|"
+                                class="main-button" style="--h: #af4035;">
+                            Удалить
+                        </button>
+                    </div>
+                    <form th:action="@{/office/delete/{index}(index=${office.index})}" method="post">
+                        <button th:id="'remove-' + ${office.index}" type="submit" style="display: none"> Удалить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

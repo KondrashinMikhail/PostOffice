@@ -32,7 +32,7 @@ public class OfficeDto {
         mails.add(Mail);
     }
 
-    public void deleteMails(Mail Mail) {
+    public void deleteMails(MailDto Mail) {
         mails.remove(Mail);
     }
 }

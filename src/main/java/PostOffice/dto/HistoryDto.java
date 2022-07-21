@@ -18,11 +18,16 @@ public class HistoryDto {
     private OfficeDto office;
     private MailDto mail;
 
+    private String index;
+
     public HistoryDto(History history) {
         id = history.getId();
         status = history.getStatus();
         date = history.getDate();
-        if (history.getOffice() != null) office = new OfficeDto(history.getOffice());
+        if (history.getOffice() != null) {
+            office = new OfficeDto(history.getOffice());
+            index = office.getIndex().toString();
+        } else index = "-";
         if (history.getMail() != null) mail = new MailDto(history.getMail());
     }
 }
