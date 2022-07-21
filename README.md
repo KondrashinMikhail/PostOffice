@@ -88,7 +88,7 @@
     
 Структуру API запросов и ответов, а так же список возможных запросов можно посмотреть по ссылке:
 
-http://spring-dev.ru:8080/swagger-ui/index.html
+http://spring-dev.ru/swagger-ui/index.html
 
 Ниже приведено назначение всех запросов:
     
@@ -116,4 +116,4 @@ http://spring-dev.ru:8080/swagger-ui/index.html
 
 # Описание запуска
 
-Приложение работает по ссылке: http://spring-dev.ru:8080
+Приложение работает по ссылке: http://spring-dev.ru
