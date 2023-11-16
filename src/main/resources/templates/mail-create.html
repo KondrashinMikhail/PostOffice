@@ -12,37 +12,31 @@
                 <form action="#" th:action="@{/mail/creating}" th:object="${mailDto}" method="post">
 
                     <div class="input-group mb-4">
-                        <input type="text" class="input" id="type" th:field="${mailDto.type}"
-                               required>
+                        <input type="text" class="input" id="type" th:field="${mailDto.type}" required>
                         <label for="type" class="input-label">Тип</label>
                     </div>
                     <div class="input-group mb-4">
-                        <input type="text" class="input" id="recipientIndex" th:field="${mailDto.recipientIndex}"
-                               required>
+                        <input type="text" class="input" id="recipientIndex" th:field="${mailDto.recipientIndex}" required>
                         <label for="recipientIndex" class="input-label">Индекс получателя</label>
                     </div>
                     <div class="input-group mb-4">
-                        <input type="text" class="input" id="recipientAddress" th:field="${mailDto.recipientAddress}"
-                               required>
+                        <input type="text" class="input" id="recipientAddress" th:field="${mailDto.recipientAddress}" required>
                         <label for="recipientAddress" class="input-label">Адрес получателя</label>
                     </div>
                     <div class="input-group mb-4">
-                        <input type="text" class="input" id="recipientName" th:field="${mailDto.recipientName}"
-                               required>
+                        <input type="text" class="input" id="recipientName" th:field="${mailDto.recipientName}" required>
                         <label for="recipientName" class="input-label">Имя получателя</label>
                     </div>
                     <div class="input-group mb-4">
-                        <input type="text" class="input" id="sourceIndex" th:field="${mailDto.sourceIndex}"
-                               required>
+                        <input type="text" class="input" id="sourceIndex" th:field="${mailDto.sourceIndex}" required>
                         <label for="sourceIndex" class="input-label">Индекс отправителя</label>
                     </div>
             </td>
             <td style="width: 50%" valign="top">
-                <button type="submit" class="mb-4 main-button" style="margin-bottom: 10px; --h: #d0f0c0;"> Добавить
-                </button>
+                <button type="submit" class="mb-4 main-button" style="margin-bottom: 10px; --h: #d0f0c0;"> Добавить</button>
                 </form>
                 <form th:action="@{/mail}">
-                    <button class="mb-4 main-button"> Назад</button>
+                    <button class="mb-4 main-button">Назад</button>
                 </form>
             </td>
         </tr>

@@ -42,12 +42,6 @@ public class MailMvcController {
         return "mail";
     }
 
-    @GetMapping("/create")
-    public String createMail(Model model) {
-        model.addAttribute("mailDto", new MailDto());
-        return "mail-create";
-    }
-
     @GetMapping("/{id}/nextStatus")
     public String nextStatus(@PathVariable Long id) {
         final Mail currentMail = mailService.findMail(id);
@@ -89,6 +83,12 @@ public class MailMvcController {
         return "redirect:/mail";
     }
 
+    @GetMapping("/create")
+    public String createMail(Model model) {
+        model.addAttribute("mailDto", new MailDto());
+        return "mail-create";
+    }
+
     @PostMapping("/creating")
     public String saveMail(@ModelAttribute @Valid MailDto mailDto,
                            BindingResult bindingResult,
@@ -107,7 +107,7 @@ public class MailMvcController {
                 mailService.findAccepted(mailDto.getType(),
                         mailDto.getRecipientIndex()));
         officeService.addMailToOffice(mailDto.getSourceIndex(), mailService.findAccepted(mailDto.getType(), mailDto.getRecipientIndex()).getId());
-        return "redirect:/mail";
+        return "mail";
     }
 
     @GetMapping("/{id}/history")

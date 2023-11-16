@@ -1,9 +1,7 @@
 package PostOffice.services;
 
-import PostOffice.entities.History;
 import PostOffice.entities.Mail;
 import PostOffice.entities.Office;
-import PostOffice.enums.MailStatus;
 import PostOffice.exceptions.MailNotFoundException;
 import PostOffice.exceptions.OfficeNotFoundException;
 import PostOffice.repositories.MailRepository;
