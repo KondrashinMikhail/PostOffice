@@ -12,8 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Builder
-@AllArgsConstructor
 public class Office {
     @Id
     private Long Index;
