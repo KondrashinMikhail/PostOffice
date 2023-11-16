@@ -3,7 +3,12 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'io.freefair.lombok' version '6.4.3.1'
 	id 'java'
+	id 'com.bmuschko.docker-spring-boot-application' version '9.3.7'
 }
+
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+def ourContainerName = "containerPostOffice"
 
 version = ''
 sourceCompatibility = '17'
@@ -34,4 +39,61 @@ tasks.named('test') {
 
 test {
 	useJUnitPlatform()
+}
+
+task createDockerFile(type: Dockerfile) {
+	from 'openjdk:17'
+	copyFile 'PostOffice.jar', '/app/test_service.jar'
+	entryPoint 'java'
+	defaultCommand '-jar', '/app/test_service.jar'
+	exposePort 8080
+}
+
+task syncJar(type: Copy) {
+	dependsOn assemble
+	from jar.destinationDirectory
+	into "$buildDir/docker"
+}
+
+compileJava {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+task buildImage(type: DockerBuildImage) {
+	dependsOn createDockerFile, syncJar
+	inputDir = createDockerFile.getDestDir()
+	images = ["kondrashinm/tuneit-gradle-docker:1.0"]
+	buildArgs = ['--platform': "linux/amd64"]
+}
+
+task stopContainer(type: DockerStopContainer) {
+	targetContainerId("$ourContainerName")
+	onError { exception -> handleError(exception) }
+}
+
+task removeContainer(type: DockerRemoveContainer) {
+	dependsOn stopContainer
+	targetContainerId("$ourContainerName")
+	onError { exception -> handleError(exception) }
+}
+
+task createContainer(type: DockerCreateContainer) {
+	dependsOn buildImage, removeContainer
+	targetImageId buildImage.getImageId()
+	containerName = "$ourContainerName"
+	hostConfig.portBindings = ['8080:8080']
+}
+
+task startContainer(type: DockerStartContainer) {
+	dependsOn createContainer
+	targetContainerId("$ourContainerName")
+}
+
+private void handleError(Throwable exc) {
+	if (exc.message != null &&
+			!exc.message.contains('NotModifiedException') &&
+			!exc.message.contains('No such container')) {
+		throw new RuntimeException(exc)
+	}
 }
